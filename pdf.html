@@ -4,19 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Generowanie, drukowanie i zapisywanie PDF z jsPDF</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
   <h1>Generowanie, drukowanie i zapisywanie PDF z jsPDF</h1>
 
   <button onclick="generatePDF()">Generuj PDF</button>
-  <button onclick="printPDF()">Drukuj PDF</button>
-  <button onclick="savePDF()">Zapisz PDF</button>
 
   <script>
+    // Inicjalizacja jsPDF
+	window.jsPDF = window.jspdf.jsPDF
+    const doc = new jsPDF();
+
     function generatePDF() {
-      const doc = new jsPDF();
-
       // Nagłówek
       doc.setFontSize(18);
       doc.setTextColor(0, 0, 255); // Kolor tekstu: niebieski
@@ -29,65 +29,24 @@
       // Tekst
       doc.setFontSize(12);
       doc.setTextColor(0); // Kolor tekstu: domyślny (czarny)
-      const loremIpsum = "Policja kosmiczna jest niezastąpioną instytucją w powszechnym utrzymaniu porządku i bezpieczeństwa w kosmosie. Dzięki swoim specjalnym umiejętnościom i wysoce zaawansowanej technologii, policyjne oddziały patrolujące kosmiczne przestrzenie są w stanie reagować na wszelkie zagrożenia, począwszy od piractwa kosmicznego, przez handel bronią po groźby ze strony obcych cywilizacji. Wsparcie policyjne to kluczowy element w utrzymaniu harmonii i pokojowej egzystencji dla wszystkich obywateli galaktyki.";
+      const loremIpsum = "Jazda w chuj";
 
       // Dzielenie tekstu na linie, aby zmieścić się na stronie
       const lines = doc.splitTextToSize(loremIpsum, 180);
       doc.text(10, 35, lines);
 
       // Zapisz dokument
-      doc.save("policyjne_supermoce_kosmos.pdf");
+      //doc.save("policyjne_supermoce_kosmos.pdf");
+	  
+	     doc.autoPrint();
+      window.open(doc.output('bloburl'));
+	  
     }
 
-    function printPDF() {
-      const doc = new jsPDF();
+   
+    
 
-      // Nagłówek
-      doc.setFontSize(18);
-      doc.setTextColor(0, 0, 255); // Kolor tekstu: niebieski
-      doc.text("Policyjne Supermoce w Kosmosie", 10, 20);
-
-      // Linia pod nagłówkiem
-      doc.setLineWidth(0.5);
-      doc.line(10, 25, 200, 25); // Rysowanie linii od (10, 25) do (200, 25)
-
-      // Tekst
-      doc.setFontSize(12);
-      doc.setTextColor(0); // Kolor tekstu: domyślny (czarny)
-      const loremIpsum = "Policja kosmiczna jest niezastąpioną instytucją w powszechnym utrzymaniu porządku i bezpieczeństwa w kosmosie. Dzięki swoim specjalnym umiejętnościom i wysoce zaawansowanej technologii, policyjne oddziały patrolujące kosmiczne przestrzenie są w stanie reagować na wszelkie zagrożenia, począwszy od piractwa kosmicznego, przez handel bronią po groźby ze strony obcych cywilizacji. Wsparcie policyjne to kluczowy element w utrzymaniu harmonii i pokojowej egzystencji dla wszystkich obywateli galaktyki.";
-
-      // Dzielenie tekstu na linie, aby zmieścić się na stronie
-      const lines = doc.splitTextToSize(loremIpsum, 180);
-      doc.text(10, 35, lines);
-
-      // Otwórz okno dialogowe drukowania
-      doc.print();
-    }
-
-    function savePDF() {
-      const doc = new jsPDF();
-
-      // Nagłówek
-      doc.setFontSize(18);
-      doc.setTextColor(0, 0, 255); // Kolor tekstu: niebieski
-      doc.text("Policyjne Supermoce w Kosmosie", 10, 20);
-
-      // Linia pod nagłówkiem
-      doc.setLineWidth(0.5);
-      doc.line(10, 25, 200, 25); // Rysowanie linii od (10, 25) do (200, 25)
-
-      // Tekst
-      doc.setFontSize(12);
-      doc.setTextColor(0); // Kolor tekstu: domyślny (czarny)
-      const loremIpsum = "Policja kosmiczna jest niezastąpioną instytucją w powszechnym utrzymaniu porządku i bezpieczeństwa w kosmosie. Dzięki swoim specjalnym umiejętnościom i wysoce zaawansowanej technologii, policyjne oddziały patrolujące kosmiczne przestrzenie są w stanie reagować na wszelkie zagrożenia, począwszy od piractwa kosmicznego, przez handel bronią po groźby ze strony obcych cywilizacji. Wsparcie policyjne to kluczowy element w utrzymaniu harmonii i pokojowej egzystencji dla wszystkich obywateli galaktyki.";
-
-      // Dzielenie tekstu na linie, aby zmieścić się na stronie
-      const lines = doc.splitTextToSize(loremIpsum, 180);
-      doc.text(10, 35, lines);
-
-      // Zapisz dokument
-      doc.save("policyjne_supermoce_kosmos.pdf");
-    }
+ 
   </script>
 </body>
 </html>
