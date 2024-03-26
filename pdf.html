@@ -1,41 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Generowanie i drukowanie PDF z jsPDF</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wybór Daty</title>
+<style>
+    .form-group {
+        margin-bottom: 20px;
+    }
+</style>
+<!-- Dołączenie biblioteki jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 </head>
 <body>
-  <h1>Generowanie i drukowanie PDF z jsPDF</h1>
 
-  <button onclick="generateAndPrintPDF()">Generuj i Drukuj PDF</button>
+<div class="form-group">
+    <label for="dataOd1">Data od:</label>
+    <input type="date" id="dataOd1" name="dataOd1">
+    <label for="dataDo1">Data do:</label>
+    <input type="date" id="dataDo1" name="dataDo1">
+</div>
+<div class="form-group">
+    <label for="dataOd2">Data od:</label>
+    <input type="date" id="dataOd2" name="dataOd2">
+    <label for="dataDo2">Data do:</label>
+    <input type="date" id="dataDo2" name="dataDo2">
+    <button id="copyDateButton">Kopiuj datę do z pierwszej linii</button>
+    <button id="saveDataButton">Generuj PDF</button>
+</div>
 
-  <script>
-    function generateAndPrintPDF() {
-      const doc = new jsPDF();
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const dataOdInput1 = document.getElementById('dataOd1');
+    const dataDoInput1 = document.getElementById('dataDo1');
+    const dataOdInput2 = document.getElementById('dataOd2');
+    const dataDoInput2 = document.getElementById('dataDo2');
+    const copyDateButton = document.getElementById('copyDateButton');
+    const saveDataButton = document.getElementById('saveDataButton');
 
-      // Nagłówek
-      doc.setFontSize(18);
-      doc.setTextColor(0, 0, 255); // Kolor tekstu: niebieski
-      doc.text("Policyjne Supermoce w Kosmosie", 10, 20);
-
-      // Linia pod nagłówkiem
-      doc.setLineWidth(0.5);
-      doc.line(10, 25, 200, 25); // Rysowanie linii od (10, 25) do (200, 25)
-
-      // Tekst
-      doc.setFontSize(12);
-      doc.setTextColor(0); // Kolor tekstu: domyślny (czarny)
-      const loremIpsum = "Policja kosmiczna jest niezastąpioną instytucją w powszechnym utrzymaniu porządku i bezpieczeństwa w kosmosie. Dzięki swoim specjalnym umiejętnościom i wysoce zaawansowanej technologii, policyjne oddziały patrolujące kosmiczne przestrzenie są w stanie reagować na wszelkie zagrożenia, począwszy od piractwa kosmicznego, przez handel bronią po groźby ze strony obcych cywilizacji. Wsparcie policyjne to kluczowy element w utrzymaniu harmonii i pokojowej egzystencji dla wszystkich obywateli galaktyki.";
-
-      // Dzielenie tekstu na linie, aby zmieścić się na stronie
-      const lines = doc.splitTextToSize(loremIpsum, 180);
-      doc.text(10, 35, lines);
-
-      // Otwórz okno dialogowe drukowania
-      doc.print();
+    // Funkcja do kopiowania wartości "Data do" z pierwszej linii do "Data do" w drugiej linii
+    function copyDateFromFirstLine() {
+        dataDoInput2.value = dataDoInput1.value;
     }
-  </script>
+
+    // Funkcja do generowania pliku PDF
+    function generatePDF() {
+        const pdf = new jsPDF();
+        const dataOd = dataOdInput2.value;
+        const dataDo = dataDoInput2.value;
+        pdf.text(`Data od: ${dataOd}, Data do: ${dataDo}`, 10, 10);
+        pdf.save('plik.pdf');
+    }
+
+    // Dodanie 3 miesięcy do daty "data do" po wybraniu daty "data od" w pierwszym polu
+    dataOdInput1.addEventListener('change', function() {
+        const dataOd = new Date(dataOdInput1.value);
+        const dataDo = new Date(dataOd.getFullYear(), dataOd.getMonth() + 3, dataOd.getDate());
+        const dataDoFormatted = dataDo.toISOString().slice(0,10); // Format ISO YYYY-MM-DD
+        dataDoInput1.value = dataDoFormatted;
+    });
+
+    // Kopiowanie wartości "Data do" z pierwszej linii do "Data do" w drugiej linii po kliknięciu przycisku
+    copyDateButton.addEventListener('click', function() {
+        copyDateFromFirstLine();
+    });
+
+    // Obsługa kliknięcia przycisku "Generuj PDF"
+    saveDataButton.addEventListener('click', function() {
+        generatePDF();
+    });
+});
+</script>
+
 </body>
 </html>
