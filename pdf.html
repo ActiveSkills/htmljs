@@ -17,23 +17,32 @@
     const doc = new jsPDF();
 
     function generatePDF() {
-      // Nagłówek
-      doc.setFontSize(18);
-      doc.setTextColor(0, 0, 255); // Kolor tekstu: niebieski
-      doc.text("Policyjne Supermoce w Kosmosie", 10, 20);
+    doc.setProperties({
+    title: "Wygenerowano za pomocą WN NS v0.0.1"
+});
 
-      // Linia pod nagłówkiem
-      doc.setLineWidth(0.5);
-      doc.line(10, 25, 200, 25); // Rysowanie linii od (10, 25) do (200, 25)
+// Dodawanie nowej strony
+doc.addPage();
 
-      // Tekst
-      doc.setFontSize(12);
-      doc.setTextColor(0); // Kolor tekstu: domyślny (czarny)
-      const loremIpsum = "Jazda w chuj";
+// Definiowanie czcionki
+doc.setFont("Calibri");
 
-      // Dzielenie tekstu na linie, aby zmieścić się na stronie
-      const lines = doc.splitTextToSize(loremIpsum, 180);
-      doc.text(10, 35, lines);
+// Rysowanie tekstu
+doc.setFontSize(12);
+doc.text("Wydział Kryminalny Komendy Wojewódzkiej Policji w Szczecinie", doc.internal.pageSize.width / 2, 40, { align: "center" });
+doc.text("Jawne", doc.internal.pageSize.width / 2, 60, { align: "center" });
+doc.text("Szczecin, 30.05.2022", doc.internal.pageSize.width / 2 + 190, 60, { align: "center" });
+
+doc.text("Pieczęć, ldz.", 50, 90);
+doc.text("KR-II-2560/22", 50, 103);
+
+doc.text("Naczelnik", 360, 103);
+doc.text("Wydziału Techniki Operacyjnej", 360, 116);
+doc.text("Komendy Wojewódzkiej Policji", 360, 129);
+doc.text("w Szczecinie", 360, 142);
+doc.text("Priorytet: Pilne", 50, 170);
+doc.text("W N I O S E K", doc.internal.pageSize.width / 2, 100, { align: "center" });
+
 
       // Zapisz dokument
       //doc.save("policyjne_supermoce_kosmos.pdf");
