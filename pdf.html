@@ -19,48 +19,43 @@
     const doc = new jsPDF();
 
     function generatePDF() {
-   doc.setProperties({
-    title: "Porównanie cen samochodów Lexus IS 200"
-});
 
-// Dodawanie nowej strony
-doc.addPage();
 
-// Definiowanie czcionki
-doc.setFont("Arial");
+// Ustalenie danych
+var miasto = "Miasto: Warszawa";
+var data = "Data: " + new Date().toLocaleDateString();
 
-// Dodawanie nagłówka
+// Nagłówek
 doc.setFontSize(18);
-doc.text("Porównanie cen samochodów Lexus IS 200", doc.internal.pageSize.width / 2, 30, { align: "center" });
+doc.text("Raport Cen Samochodów Lexus IS 200", 10, 20);
 
-// Dodawanie miasta i daty
+// Dodanie miasta i daty
 doc.setFontSize(12);
-doc.text("Miasto: Szczecin", 20, 50);
-doc.text("Data: 26 marca 2024", 20, 60);
+doc.text(miasto, 10, 30);
+doc.text(data, 10, 40);
 
-// Dodawanie tabeli z danymi
-var headers = ["Rok produkcji", "Przebieg (km)", "Cena (PLN)"];
-var data = [
-    [2005, 120000, 25000],
-    [2008, 100000, 28000],
-    [2010, 90000, 32000],
-    [2012, 80000, 35000],
-    [2015, 60000, 38000]
+// Tabelka z danymi
+var dane = [
+    ["Rok Produkcji", "Model", "Cena"],
+    ["2018", "Lexus IS 200", "120 000 PLN"],
+    ["2019", "Lexus IS 200", "130 000 PLN"],
+    ["2020", "Lexus IS 200", "140 000 PLN"],
+    ["2021", "Lexus IS 200", "150 000 PLN"],
+    ["2022", "Lexus IS 200", "160 000 PLN"]
 ];
 doc.autoTable({
-    startY: 80,
-    head: [headers],
-    body: data,
-    theme: "striped"
+    startY: 50,
+    head: [dane[0]],
+    body: dane.slice(1),
 });
 
-// Dodawanie wiersza o pracy w policji
+// Wiersz o pracy w policji
 doc.setFontSize(12);
-doc.text("Praca w policji wymaga zaangażowania i odpowiedzialności w służbie społeczeństwu.", 20, doc.internal.pageSize.height - 50);
+doc.text("Jestem dumny z mojej pracy w policji, dbając o bezpieczeństwo naszego społeczeństwa.", 10, doc.autoTable.previous.finalY + 10);
 
-// Dodawanie miejsca na pieczątkę
-doc.text("..................................................", 20, doc.internal.pageSize.height - 20);
-
+// Miejsce na pieczątkę
+doc.text("Pieczątka ___________________________________________", 10, doc.autoTable.previous.finalY + 20);
+	    
 
       // Zapisz dokument
       //doc.save("policyjne_supermoce_kosmos.pdf");
