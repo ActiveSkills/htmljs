@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generowanie, drukowanie i zapisywanie PDF z jsPDF</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+	
+</head>
+<body>
+  <h1>Generowanie, drukowanie i zapisywanie PDF z jsPDF</h1>
+
+  <button onclick="generatePDF()">Generuj PDF</button>
+
+  <script>
+    // Inicjalizacja jsPDF
+	window.jsPDF = window.jspdf.jsPDF
+    const doc = new jsPDF();
+
+    function generatePDF() {
+
+
+// Ustawienie czcionki i jej rozmiaru
+doc.setFont("helvetica");
+doc.setFontSize(10);
+
+// Dodanie tekstu
+doc.text("Wydział Kryminalny Komendy Wojewódzkiej Policji w Szczecinie", 20, 20);
+doc.text("Jawne  Szczecin 26.03.2024", 20, 30);
+doc.text("Priorytet: Zwykłe", 20, 40);
+doc.text("W N I O S E K o dane", 20, 50);
+doc.text("W związku z prowadzoną sprawą operacyjną nr 122/1 kryptonim JAZDA proszę o nw. ustalenia.", 20, 60);
+doc.text("1 Biling MSISDN/PSTN - dane telekomunikacyjne 699699414", 20, 70);
+doc.text("2023-12-12 00:00 2023-12-13 00:00", 20, 80);
+doc.text("Uzasadnienie/Uwagi: Takie tam wazne.", 20, 90);
+doc.text("Kwalifikacja prawna: 12 par.1 KK", 20, 100);
+doc.text("Policjant uzyskujący dane: Maciej Maciejski IK: 877777 Tel: 46411125", 20, 110);
+doc.text("Preferowana forma udostępnienia danych: SEPP", 20, 120);
+doc.text("Hasło do archiwum: JAZDA", 20, 130);
+      // Zapisz dokument
+      //doc.save("policyjne_supermoce_kosmos.pdf");
+	  
+	     doc.autoPrint();
+      window.open(doc.output('bloburl'));
+	  
+    }
+
+   
+    
+
+ 
+  </script>
+</body>
+</html>
